@@ -19,6 +19,7 @@ class GameBoard:
         self.window.minsize(width=500, height=300)
 
         self.label1 = Label(height=10, width=25, borderwidth=2, relief="solid")
+        self.label1.config(height=10, width=25)
         self.label1.grid(row=0, column=0)
         self.button1 = Button(height=10, width=25, command=lambda: self.click(self.button1, self.label1, 1))
         self.button1.grid(row=0, column=0)
@@ -104,18 +105,18 @@ class GameBoard:
     def update_status(self, player, index):
         if player == "❌":
             self.x_list.append(index)
-            self.x_list.sort()
-            if self.x_list in self.winning_combinations:
-                self.turn_label.config(text=f"Game Over! ❌ wins!")
-                self.game_over = True
-                return
+            for combination in self.winning_combinations:
+                if combination[0] in self.x_list and combination[1] in self.x_list and combination[2] in self.x_list:
+                    self.turn_label.config(text=f"Game Over! ❌ wins!")
+                    self.game_over = True
+                    return
         else:
             self.o_list.append(index)
-            self.o_list.sort()
-            if self.o_list in self.winning_combinations:
-                self.turn_label.config(text=f"Game Over! ⭕ wins!")
-                self.game_over = True
-                return
+            for combination in self.winning_combinations:
+                if combination[0] in self.o_list and combination[1] in self.o_list and combination[2] in self.o_list:
+                    self.turn_label.config(text=f"Game Over! ⭕ wins!")
+                    self.game_over = True
+                    return
 
     def restart_game(self):
         self.restart = True
