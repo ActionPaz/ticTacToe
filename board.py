@@ -1,4 +1,3 @@
-import collections
 from tkinter import Tk, Button, Label
 
 
@@ -7,11 +6,13 @@ class GameBoard:
     def __init__(self):
 
         self.turn = 1
-        self.winning_combinations = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
+        self.winning_combinations = \
+            [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
         self.x_list = []
         self.o_list = []
         self.game_over = False
         self.buttons = []
+        self.restart = False
 
         self.window = Tk()
         self.window.title("Tic Tac Toe")
@@ -74,7 +75,7 @@ class GameBoard:
         self.turn_label = Label(height=10, width=25, text=f"Turn: {self.check_turn()}")
         self.turn_label.grid(row=3, column=0)
 
-        self.restart_button = Button(text="Restart")
+        self.restart_button = Button(text="Restart", command=self.restart_game)
         self.restart_button.grid(row=3, column=1)
 
         self.window.mainloop()
@@ -115,3 +116,7 @@ class GameBoard:
                 self.turn_label.config(text=f"Game Over! ⭕ wins!")
                 self.game_over = True
                 return
+
+    def restart_game(self):
+        self.restart = True
+        self.window.destroy()
